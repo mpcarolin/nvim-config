@@ -23,6 +23,7 @@ Plug 'xolox/vim-session'
 Plug 'xolox/vim-misc'
 Plug 'preservim/nerdcommenter'
 Plug 'airblade/vim-gitgutter'
+Plug 'michaeldyrynda/carbon'
 
 call plug#end()
 
@@ -71,34 +72,42 @@ nnoremap <Leader>i :set invnumber<CR>
 nmap <Leader>t :TestFile<CR>
 nmap <Leader>ts :TestSuite<CR>
 
-" git
-nnoremap <Leader>st :Git status<CR>
+" Git
+nnoremap <Leader>g :Git<CR>
+" > history of last 100 commits
+nnoremap <Leader>gl :Gclog -100<CR>
+" > commit history of current file
+nnoremap <Leader>gf :0Gclog -100<CR>
 
 " sessions
 nnoremap <Leader>os :OpenSession<CR>
 
 " terminal
 tnoremap <Esc> <C-\><C-n>
-nnoremap <Leader>m :vsplit term://bash<CR>
 
 " mapping to enable indent folding
 nnoremap <Leader>ef :set foldmethod=indent<CR>
 
-
+" ============================ Vim-Session ==============================
+let g:session_autosave = "yes"
 
 " ============================== Vim-Test ===============================
 let test#strategy = "neovim"
 
 " ============================ Vim-Airlines =============================
-let g:airline_theme='gruvbox'
+let g:airline_theme="gruvbox"
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
 
 
 " ========================== General Settings ===========================
 colorscheme gruvbox
-set number
-set t_Co=256
+set background=dark " gruvbox has dark and light modes
+if has("termguicolors")
+  set termguicolors
+endif
+
+set relativenumber
 
 filetype plugin indent on
 " On pressing tab, insert 2 spaces
@@ -110,6 +119,4 @@ set softtabstop=2
 set shiftwidth=2
 
 map <C-f> :call RangeJsBeautify()<cr>
-
-" :invnumber for toggling numbers
 
