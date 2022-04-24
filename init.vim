@@ -1,8 +1,11 @@
+
+" add .vim directory to runtime path (needed for "plug")
 set rtp +=~/.vim
 
 " =============================== Plugins ===============================
 call plug#begin()
 
+Plug 'rizzatti/dash.vim'
 Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'morhetz/gruvbox'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -31,6 +34,9 @@ filetype plugin on
 
 " ============================= KeyBindings =============================
 
+nnoremap <Leader>k <Plug>DashSearch
+
+
 " ----> NERDTree 
 let g:NERDTreeDirArrowExpandable = '▸'
 let g:NERDTreeDirArrowCollapsible = '▾'
@@ -43,9 +49,17 @@ nnoremap <Leader>n :NERDTreeFind<CR> :wincmd p<CR>
 nnoremap <C-p> :GFiles<Cr>
 nnoremap <C-b> :Buffers<Cr>
 
-" tabs with airlines
-nnoremap <C-l> :bnext<cr>
-nnoremap <C-h> :bprev<cr>
+" Tabs
+" this character maps to "option+h" on MacOS
+nnoremap ˙ :bnext<CR>
+" this character maps to "option+l" on MacOS
+nnoremap ¬ :bprev<CR>
+
+" Pane switching
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
 
 " common leader mappings
 let g:mapleader = " "
@@ -120,3 +134,11 @@ set shiftwidth=2
 
 map <C-f> :call RangeJsBeautify()<cr>
 
+" leading spaces and tabs visualized
+set list lcs=lead:·,trail:·,tab:»·
+
+" highlight yanked results for 500ms
+augroup highlight_yank
+    autocmd!
+    au TextYankPost * silent! lua vim.highlight.on_yank{higroup="IncSearch", timeout=500}
+augroup END
